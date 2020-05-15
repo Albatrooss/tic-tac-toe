@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+:root {
+    --nav-bg: rgb(194, 118, 118);
+}
+nav {
+    height: 50px;
+    text-align: center;
+    background-color: var(--nav-bg);
+    padding: 10px;
+}
+main {
+    width: 100%;
+}
+.container {
+    width: 330px;
+    margin: 50px auto;
+}
+.row {
+    width: 100%;
+    overflow: hidden;
+}
+.cell:hover {
+    cursor: pointer;
+}
+.cell {
+    margin: 5px;
+    height: 100px;
+    width: 100px;
+    background-color: #888;
+    float: left;
+    border: 1px solid black;
+    font-size: 90px;
+    text-transform: uppercase;
+    text-align: center;
+}
+#newGameBtn,
+#undoBtn {
+    display: block;
+    margin: 0 auto;
+}
