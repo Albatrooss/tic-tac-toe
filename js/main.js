@@ -16,6 +16,7 @@ let gameOver = false;
 
 let gameEl = document.querySelector('.container');
 let cellEls = document.querySelectorAll('.cell');
+let turnSpan = document.getElementById('turnSpan');
 let newGameBtn = document.getElementById('newGameBtn');
 let undoBtn = document.getElementById('undoBtn');
 
@@ -38,14 +39,15 @@ undoBtn.addEventListener('click', e => {
 gameEl.addEventListener('click', e => {
   if (e.target.className !== 'cell' || cells[e.target.id] !== null || gameOver) return;
   cells[e.target.id] = turn;
+  turn = turn === 'x' ? 'o' : 'x';
   renderGame();
   let temp = [...cells];
   turns = [...turns, temp];
   checkWinner();
   if (gameOver) {
-    alert(`${turn} wins!`);
+    alert(`${turn === 'x' ? 'o' : 'x'} wins!`);
   }
-  turn = turn === 'x' ? 'o' : 'x';
+  if (!cells.includes(null)) alert("It's a tie");
   return;
 });
 
@@ -53,6 +55,7 @@ const renderGame = () => {
   cells.forEach((x, i) => {
     cellEls[i].innerHTML = x;
   });
+  turnSpan.innerHTML = turn.toUpperCase();
 };
 
 const checkWinner = () => {
