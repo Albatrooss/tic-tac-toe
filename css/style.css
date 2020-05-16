@@ -26,7 +26,7 @@ h2 {
     text-align: center;
 }
 .message.hidden {
-    top: -150vh;
+    top: -200vh;
     opacity: 0;
 }
 

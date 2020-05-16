@@ -28,7 +28,27 @@ let banana = document.querySelector('.banana');
 let audio = document.getElementById('yay');
 audio.volume = 0.2;
 
-newGameBtn.addEventListener('click', e => {
+const renderGame = () => {
+  cells.forEach((x, i) => {
+    cellEls[i].innerHTML = x;
+  });
+  turnSpan.innerHTML = turn.toUpperCase();
+};
+
+const nextTurn = () => {
+  turn = turn === 'x' ? 'o' : 'x';
+};
+
+const logTurn = () => {
+  let temp = [...cells];
+  if (turns.length === 1) {
+    turns = [[null, null, null, null, null, null, null, null, null], temp];
+  } else {
+    turns = [...turns, temp];
+  }
+};
+
+const newGame = () => {
   cells = [null, null, null, null, null, null, null, null, null];
   turns = [[null, null, null, null, null, null, null, null, null]];
   turn = 'x';
@@ -41,43 +61,15 @@ newGameBtn.addEventListener('click', e => {
   turnEl.style.opacity = 1;
   someoneWon = false;
   return message.classList.toggle('hidden');
-});
+};
 
-undoBtn.addEventListener('click', e => {
+const undo = () => {
   if (turns.length < 2) return;
   turns.pop();
   gameOver = false;
   cells = turns[turns.length - 1];
-  turn = turn === 'x' ? 'o' : 'x';
-  console.log(turns);
+  nextTurn();
   return renderGame();
-});
-
-gameEl.addEventListener('click', e => {
-  if (!e.target.classList.value.includes('cell') || cells[e.target.id] !== null || gameOver) return;
-  cells[e.target.id] = turn;
-  turn = turn === 'x' ? 'o' : 'x';
-  renderGame();
-  let temp = [...cells];
-  if (turns.length === 1) {
-    turns = [[null, null, null, null, null, null, null, null, null], temp];
-  } else {
-    turns = [...turns, temp];
-  }
-  checkWinner();
-  console.log(turns);
-  if (gameOver) {
-    winner();
-  }
-  if (!cells.includes(null) && !gameOver) displayMessage("It's a tie");
-  return;
-});
-
-const renderGame = () => {
-  cells.forEach((x, i) => {
-    cellEls[i].innerHTML = x;
-  });
-  turnSpan.innerHTML = turn.toUpperCase();
 };
 
 const checkWinner = () => {
@@ -105,4 +97,22 @@ const displayMessage = msg => {
   message.classList.toggle('hidden');
   messageTxt.innerHTML = msg;
 };
-console.log(messageTxt);
+
+newGameBtn.addEventListener('click', newGame);
+
+undoBtn.addEventListener('click', undo);
+
+gameEl.addEventListener('click', e => {
+  if (!e.target.classList.value.includes('cell') || cells[e.target.id] !== null || gameOver) return;
+  cells[e.target.id] = turn;
+  nextTurn();
+  renderGame();
+  logTurn();
+  checkWinner();
+  if (gameOver) {
+    winner();
+  } else if (!cells.includes(null)) {
+    displayMessage("It's a tie!");
+  }
+  return;
+});
