@@ -1,4 +1,4 @@
-let winningCombos = [
+const winningCombos = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -15,6 +15,8 @@ let turn = 'x';
 let gameOver = false;
 let someoneWon = false;
 
+/*------- DOM Elements ----------*/
+
 let gameEl = document.querySelector('.container');
 let cellEls = document.querySelectorAll('.cell');
 let turnEl = document.querySelector('main > h2');
@@ -27,6 +29,14 @@ let confetti = document.querySelector('.confetti');
 let banana = document.querySelector('.banana');
 let audio = document.getElementById('yay');
 audio.volume = 0.2;
+
+/*------- Even Listeners ----------*/
+
+newGameBtn.addEventListener('click', newGame);
+
+undoBtn.addEventListener('click', undo);
+
+/*------- Functions ----------*/
 
 const renderGame = () => {
   cells.forEach((x, i) => {
@@ -48,7 +58,7 @@ const logTurn = () => {
   }
 };
 
-const newGame = () => {
+function newGame() {
   cells = [null, null, null, null, null, null, null, null, null];
   turns = [[null, null, null, null, null, null, null, null, null]];
   turn = 'x';
@@ -61,16 +71,16 @@ const newGame = () => {
   turnEl.style.opacity = 1;
   someoneWon = false;
   return message.classList.toggle('hidden');
-};
+}
 
-const undo = () => {
+function undo() {
   if (turns.length < 2) return;
   turns.pop();
   gameOver = false;
   cells = turns[turns.length - 1];
   nextTurn();
   return renderGame();
-};
+}
 
 const checkWinner = () => {
   winningCombos.forEach(x => {
@@ -97,10 +107,6 @@ const displayMessage = msg => {
   message.classList.toggle('hidden');
   messageTxt.innerHTML = msg;
 };
-
-newGameBtn.addEventListener('click', newGame);
-
-undoBtn.addEventListener('click', undo);
 
 gameEl.addEventListener('click', e => {
   if (!e.target.classList.value.includes('cell') || cells[e.target.id] !== null || gameOver) return;
