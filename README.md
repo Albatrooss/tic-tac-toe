@@ -25,7 +25,7 @@ This is the first game I made for <strong>General Assembly</strong>'s <em>Softwa
 
 ## Getting Started
 Go to:<br>
-https://pages.git.generalassemb.ly/TimRobillard/TicTacToe/ <br>
+https://albatrooss.github.io/tic-tac-toe/ <br>
 to play!
 
 Play against a friend in this rendition of a classic game
